@@ -30,7 +30,7 @@ const Crop = () => {
       if (inputs.city) {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/get-weather?city=${inputs.city}`
+            `https://agro-friend.vercel.app/api/get-weather?city=${inputs.city}`
           );
 
           const { temperature, humidity } = response.data;

@@ -16,7 +16,7 @@ const Fertilizer = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/fertilizer-recommendation",
+        "https://agro-friend.vercel.app/api/fertilizer-recommendation",
         {
           cropname: cropName,
           nitrogen: nitrogen,

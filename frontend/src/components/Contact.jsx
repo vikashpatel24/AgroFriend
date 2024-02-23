@@ -25,7 +25,7 @@ const Contact = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/email",
+        "https://agro-friend.vercel.app/api/email",
         formData
       );
 
