@@ -1,6 +1,6 @@
 const csv = require("csv-parser");
 const fs = require("fs");
-const fertilizerData = require("../utils/fertilizerData");
+const fertilizerData = require("../utils/fertilizerData.js");
 
 module.exports.fertilizerRecommendation = async (req, res) => {
   const cropName = req.body.cropname;
