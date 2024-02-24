@@ -153,7 +153,7 @@ const HomePage = () => {
                   {/* Replace with your image */}
                   <div className="mx-auto max-w-full h-auto overflow-hidden rounded-lg shadow-md">
                     <img
-                      src="/assets/cropsre.png"
+                      src="/assets/cropsre.jpg"
                       alt="img"
                       className="w-full  h-auto md:h-96 object-cover"
                     />
