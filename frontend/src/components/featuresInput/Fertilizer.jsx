@@ -9,12 +9,14 @@ const Fertilizer = () => {
   const [nitrogen, setNitrogen] = useState("");
   const [phosphorous, setPhosphorous] = useState("");
   const [potassium, setPotassium] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(cropName, nitrogen, phosphorous, potassium);
+    // console.log(cropName, nitrogen, phosphorous, potassium);
 
     try {
+      setLoading(true);
       const response = await axios.post(
         "https://agro-friend.vercel.app/api/fertilizer-recommendation",
         {
@@ -30,6 +32,8 @@ const Fertilizer = () => {
       navigate("/fertilizer-result", { state: { recommendation } });
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false); // Set loading to false whether the request succeeds or fails
     }
   };
 
@@ -106,11 +110,18 @@ const Fertilizer = () => {
                     </select>
                   </div>
                 </div>
-                <button
+                {/* <button
                   type="submit"
                   className="bg-green-500 text-gray-900 text-lg ring-1 ring-gray-900 shadow-xl px-4 rounded-lg hover:text-white py-2"
                 >
                   Get Advice
+                </button> */}
+                <button
+                  type="submit"
+                  className="bg-green-500 text-gray-900 text-lg ring-1 ring-gray-900 shadow-xl px-4 rounded-lg hover:text-white py-2"
+                  disabled={loading} // Disable the button when loading
+                >
+                  {loading ? "Fetching..." : "Get Advice"}
                 </button>
               </form>
             </div>

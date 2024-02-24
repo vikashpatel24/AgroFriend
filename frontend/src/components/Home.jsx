@@ -69,13 +69,13 @@ const HomePage = () => {
                   </div>
                   <div class="flex flex-col items-center justify-center lg:flex lg:flex-row lg:justify-start md:flex-row gap-6">
                     <Link
-                      to={"/ud"}
+                      to={"/crop"}
                       className="rounded-full border text-center border-black bg-black px-5 py-2 text-sm text-white shadow-lg transition-all hover:bg-green-600 hover:text-black"
                     >
                       Get Recommendations
                     </Link>
                     <Link
-                      to={"/ud"}
+                      to={"/fertilizer"}
                       className="rounded-full border text-center border-gray-300 bg-white px-5 py-2 shadow-lg transition-all hover:border-green-600"
                     >
                       <p className="text-sm px-8">Get a Demo</p>
