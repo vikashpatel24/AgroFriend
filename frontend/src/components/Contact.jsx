@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SocialMedia from "./SocialMedia";
 
@@ -11,7 +11,8 @@ const Contact = () => {
     message: "",
   });
 
-  // Function to handle input changes
+  const [loading, setLoading] = useState(false);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -20,10 +21,11 @@ const Contact = () => {
     }));
   };
 
-  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true); // Set loading to true while sending
+
       const response = await axios.post(
         "https://agro-friend.vercel.app/api/email",
         formData
@@ -32,9 +34,19 @@ const Contact = () => {
       if (response.status === 200) {
         console.log("Form data submitted:", formData);
         alert("Email Sent Successfully!");
+
+        // Clear form data
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+        });
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false); // Set loading back to false after sending
     }
   };
 
@@ -136,9 +148,11 @@ const Contact = () => {
                       <div className="mb-6">
                         <button
                           type="submit"
-                          className="w-full px-3 py-4 font-semibold text-white bg-black rounded-md hover:bg-white hover:text-black hover:border hover:border-emerald-500 focus:bg-emerald-500 focus:outline-none"
+                          className={`w-full px-3 py-4 font-semibold text-white bg-emerald-500 rounded-md hover:bg-white hover:text-black hover:border hover:border-emerald-500 focus:bg-emerald-500 focus:outline-none ${
+                            loading ? "opacity-50 cursor-not-allowed" : ""
+                          }`}
                         >
-                          Send Message
+                          {loading ? "Sending..." : "Send Message"}
                         </button>
                       </div>
                     </form>
