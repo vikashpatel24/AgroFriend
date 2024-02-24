@@ -15,6 +15,9 @@ const Crop = () => {
     rainfall: "",
   });
 
+  const [loadingWeather, setLoadingWeather] = useState(false);
+  const [loadingRecommendation, setLoadingRecommendation] = useState(false);
+
   const [weather, setWeather] = useState({
     temperature: null,
     humidity: null,
@@ -29,6 +32,7 @@ const Crop = () => {
     const fetchWeather = async () => {
       if (inputs.city) {
         try {
+          setLoadingWeather(true); // Set loading state while fetching data
           const response = await axios.get(
             `https://agro-friend.vercel.app/api/get-weather?city=${inputs.city}`
           );
@@ -37,6 +41,8 @@ const Crop = () => {
           setWeather({ temperature, humidity });
         } catch (error) {
           console.error(error);
+        } finally {
+          setLoadingWeather(false); // Reset loading state when data is fetched
         }
       }
     };
@@ -44,30 +50,28 @@ const Crop = () => {
     fetchWeather();
   }, [inputs.city]);
 
+  const { nitrogen, phosphorus, potassium, city, pH, rainfall } = inputs;
 
-  const { nitrogen, phosphorus, potassium,city, pH, rainfall } = inputs;
+  const { temperature, humidity } = weather;
 
-
-    const { temperature, humidity } = weather;
-
-    // Creating a new object with the original inputs and the fetched temperature and humidity
-    const requestData = {
-      nitrogen,
-      phosphorus,
-      potassium,
-      temperature,
-      city,
-      humidity,
-      pH,
-      rainfall,
-    };
-    // console.log(requestData)
-
+  // Creating a new object with the original inputs and the fetched temperature and humidity
+  const requestData = {
+    nitrogen,
+    phosphorus,
+    potassium,
+    temperature,
+    city,
+    humidity,
+    pH,
+    rainfall,
+  };
+  // console.log(requestData)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      setLoadingRecommendation(true);
       const response = await axios.post(
         "https://crop-recommend-pbk4.onrender.com/api/crop-recommendation",
         requestData
@@ -77,6 +81,9 @@ const Crop = () => {
       navigate("/crop-result", { state: { recommendation } });
     } catch (error) {
       console.error(error);
+    }
+    finally {
+      setLoadingRecommendation(false); // Reset loading state when data is fetched or an error occurs
     }
   };
 
@@ -148,7 +155,7 @@ const Crop = () => {
                       onChange={handleInputChange}
                       className="font-light sm:font-normal rounded-md pl-2 pr-8 bg-white border border-gray-400 focus:outline-none focus:border-blue-500"
                     >
-                      <option>Select State</option>
+                      {/* <option>Select State</option> */}
                       {states.map((state, index) => (
                         <option key={index} value={state.name}>
                           {state.name}
@@ -167,7 +174,7 @@ const Crop = () => {
                         !inputs.state || inputs.state === "Select State"
                       }
                     >
-                      <option>Select City</option>
+                      {/* <option>Select City</option> */}
                       {states
                         .find((state) => state.name === inputs.state)
                         ?.cities.map((city, index) => (
@@ -178,23 +185,29 @@ const Crop = () => {
                     </select>
                   </div>
                   <div className="space-x-2 space-y-2 text-left">
-                    {weather.temperature && weather.humidity && (
-                      <div className="space-y-2">
-                        <p>
-                          Temperature:{" "}
-                          <span className=" font-normal text-orange-600">
-                            {(weather.temperature - 273.15).toFixed(2)}°C{" "}
-                          </span>
-                        </p>
-                        <p>
-                          Humidity:{" "}
-                          <span className=" font-normal text-orange-600">
-                            {weather.humidity.toFixed(2)}%{" "}
-                          </span>
-                        </p>
-                      </div>
+                    {loadingWeather && (
+                      <p>Loading temperature and humidity...</p>
                     )}
+                    {weather.temperature &&
+                      weather.humidity &&
+                      !loadingWeather && (
+                        <div className="space-y-2">
+                          <p>
+                            Temperature:{" "}
+                            <span className=" font-normal text-orange-600">
+                              {(weather.temperature - 273.15).toFixed(2)}°C{" "}
+                            </span>
+                          </p>
+                          <p>
+                            Humidity:{" "}
+                            <span className=" font-normal text-orange-600">
+                              {weather.humidity.toFixed(2)}%{" "}
+                            </span>
+                          </p>
+                        </div>
+                      )}
                   </div>
+
                   <div className="space-x-2 space-y-2">
                     <label className="text-sm">pH Level:</label>
                     <input
@@ -220,11 +233,20 @@ const Crop = () => {
                     />
                   </div>
                 </div>
-                <button
+                {/* <button
                   type="submit"
                   className="bg-green-500 text-gray-900 text-lg ring-1 ring-gray-900 shadow-xl px-4 rounded-lg hover:text-white py-2"
                 >
                   Get Recommendations
+                </button> */}
+                <button
+                  type="submit"
+                  disabled={loadingRecommendation} // Disable the button when loading
+                  className={`bg-green-500 text-gray-900 text-lg ring-1 ring-gray-900 shadow-xl px-4 rounded-lg hover:text-white py-2 ${
+                    loadingRecommendation ? "cursor-not-allowed" : ""
+                  }`}
+                >
+                  {loadingRecommendation ? "Getting Recommendations..." : "Get Recommendations"}
                 </button>
               </form>
             </div>
