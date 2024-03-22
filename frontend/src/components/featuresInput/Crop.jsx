@@ -239,6 +239,7 @@ const Crop = () => {
                 >
                   Get Recommendations
                 </button> */}
+            <div className="text-justify"><b className="text-red-600">Note:</b> Used render hosting and it's free instance will spin down with inactivity, which can delay requests by 50 seconds or more.</div>
                 <button
                   type="submit"
                   disabled={loadingRecommendation} // Disable the button when loading
@@ -249,6 +250,7 @@ const Crop = () => {
                   {loadingRecommendation ? "Getting Recommendations..." : "Get Recommendations"}
                 </button>
               </form>
+
             </div>
           </div>
         </section>
