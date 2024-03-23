@@ -73,7 +73,7 @@ const Crop = () => {
     try {
       setLoadingRecommendation(true);
       const response = await axios.post(
-        "https://crop-recommend-pbk4.onrender.com/api/crop-recommendation",
+        "https://crop-recommendation-vikashpatel.koyeb.app/api/crop-recommendation",
         requestData
       );
 
