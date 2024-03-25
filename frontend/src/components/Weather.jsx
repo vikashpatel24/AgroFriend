@@ -7,7 +7,7 @@ import { BsSunrise } from "react-icons/bs";
 import { BsSunset } from "react-icons/bs";
 
 const Weather = () => {
-  const [searchCity, setSearchCity] = useState("varanasi");
+  const [searchCity, setSearchCity] = useState("Allahabad");
   const [weather, setWeather] = useState({
     city: "",
     date: "",
