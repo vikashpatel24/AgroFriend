@@ -9,15 +9,15 @@ import { BsSunset } from "react-icons/bs";
 const Weather = () => {
   const [searchCity, setSearchCity] = useState("varanasi");
   const [weather, setWeather] = useState({
+    city: "",
+    date: "",
+    icon: "",
+    cloud: "",
     temperature: 0,
     humidity: 0,
     windspeed: "",
-    city: "",
     sunrise: "",
     sunset: "",
-    date: "",
-    cloud: "",
-    icon: "",
   });
 
   const handleInputChange = (e) => {
@@ -93,7 +93,7 @@ const Weather = () => {
       <div className="flex pt-20 flex-col items-center justify-start min-h-[100dvh] ">
         <div className="flex flex-col pt-8 items-center justify-center">
           <h2 className="text-3xl font-bold pb-3 tracking-tighter sm:text-5xl xl:text-6xl/none bg-gradient-to-r from-red-600 to-amber-600 bg-clip-text text-transparent">
-            Weather Finder 
+            Weather Finder
           </h2>
           <p className="max-w-[600px] text-gray-900 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed ">
             Let us help you to know the weather of any place...
