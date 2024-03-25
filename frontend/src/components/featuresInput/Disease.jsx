@@ -78,7 +78,7 @@ const Disease = () => {
                 Detect & Protect
               </h2>
 
-              <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+              <p className="max-w-[900px] text-gray-900 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                 Upload images of your plant leaves or fruits to detect diseases.
                 We'll analyze the images and provide you with information about
                 possible diseases affecting your plants.

@@ -46,7 +46,7 @@ const Fertilizer = () => {
               <h2 className="text-3xl font-bold pb-3 tracking-tighter sm:text-5xl xl:text-6xl/none bg-gradient-to-r from-red-600 to-amber-600 bg-clip-text text-transparent">
                 Fertilizer Advice
               </h2>
-              <p className="max-w-[600px] text-gray-900 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+              <p className="max-w-[600px] text-gray-900 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                 Learn about the best fertilizers for your soil type and get
                 personalized advice based on your NPK levels.
               </p>

@@ -1,93 +1,173 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { FaSearch } from "react-icons/fa";
+import { WiHumidity } from "react-icons/wi";
+import { FaWind } from "react-icons/fa6";
+import { BsSunrise } from "react-icons/bs";
+import { BsSunset } from "react-icons/bs";
 
 const Weather = () => {
+  const [searchCity, setSearchCity] = useState("varanasi");
+  const [weather, setWeather] = useState({
+    temperature: 0,
+    humidity: 0,
+    windspeed: "",
+    city: "",
+    sunrise: "",
+    sunset: "",
+    date: "",
+    cloud: "",
+    icon: "",
+  });
+
+  const handleInputChange = (e) => {
+    setSearchCity(e.target.value);
+  };
+
+  const handleSubmit = () => {};
+
+  useEffect(() => {
+    const fetchWeather = async () => {
+      if (searchCity) {
+        try {
+          const OPENWEATHER_API_KEY = "557157be1f8fcdc381649e69ad6a9769";
+          // const OPENWEATHER_API_KEY = "e450bc345a80a08ada69fd5c714d871d";
+          const apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=${OPENWEATHER_API_KEY}`;
+
+          const response = await axios.get(apiUrl);
+          console.log(response.data);
+          const { main } = response.data;
+          const temperature = main.temp;
+          const humidity = main.humidity;
+          const city = response.data.name;
+          const windspeed = response.data.wind.speed;
+          const sunr = response.data.sys.sunrise;
+          const suns = response.data.sys.sunset;
+          const dt = response.data.dt;
+          const cloud = response.data.weather[0].description;
+          const ic = response.data.weather[0].icon;
+          const icon = `https://openweathermap.org/img/wn/${ic}@2x.png`;
+          const sunriseDate = new Date(sunr * 1000);
+          const sunsetDate = new Date(suns * 1000);
+          const dates = new Date(dt * 1000);
+          const sunrise = sunriseDate
+            .toLocaleString("en-IN", { timeZone: "Asia/Kolkata", hour12: true })
+            .split(",")[1];
+          const sunset = sunsetDate
+            .toLocaleString("en-IN", { timeZone: "Asia/Kolkata", hour12: true })
+            .split(",")[1];
+          const date = dates.toLocaleString("en-IN", {
+            timeZone: "Asia/Kolkata",
+            // day: "numeric",
+            // month: "long",
+            // year: "numeric",
+            weekday: "long",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+            hour12: true,
+          });
+
+          setWeather({
+            city,
+            date,
+            icon,
+            cloud,
+            temperature,
+            humidity,
+            windspeed,
+            sunrise,
+            sunset,
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+
+    fetchWeather();
+  }, [searchCity]);
+
   return (
     <>
-         <div className="flex pt-20 flex-col min-h-[100dvh]">
-
-         <header className="flex items-center h-16 px-4 border-b shrink-0 md:px-6">
-        <Link className="flex items-center gap-2 text-lg font-semibold sm:text-base" href="#">
-          <SunIcon className="w-4 h-4" />
-          <span className="sr-only">Acme Inc</span>
-        </Link>
-        <nav className="hidden font-medium sm:flex flex-row items-center gap-5 text-sm lg:gap-6">
-          <Link className="font-bold" href="#">
-            Home
-          </Link>
-          <Link className="text-gray-500 dark:text-gray-400" href="#">
-            Favorites
-          </Link>
-          <Link className="text-gray-500 dark:text-gray-400" href="#">
-            Settings
-          </Link>
-        </nav>
-        <div className="flex items-center w-full gap-4 md:ml-auto md:gap-2 lg:gap-4">
-          <form className="flex-1">
-            <input placeholder="Search for a city..." />
-            <button className="sr-only" type="submit">
-              Submit
-            </button>
-          </form>
-          <button className="ml-auto md:hidden" size="icon">
-            <SearchIcon className="w-4 h-4" />
-            <span className="sr-only">Search</span>
-          </button>
-          <button className="rounded-full ml-auto" size="icon" variant="ghost">
-            <img
-              alt="Avatar"
-              className="rounded-full border"
-              height="32"
-              src="/placeholder.svg"
-              style={{
-                aspectRatio: "32/32",
-                objectFit: "cover",
-              }}
-              width="32"
-            />
-            <span className="sr-only">Toggle user menu</span>
-          </button>
+      <div className="flex pt-20 flex-col items-center justify-start min-h-[100dvh] ">
+        <div className="flex flex-col pt-8 items-center justify-center">
+          <h2 className="text-3xl font-bold pb-3 tracking-tighter sm:text-5xl xl:text-6xl/none bg-gradient-to-r from-red-600 to-amber-600 bg-clip-text text-transparent">
+            Weather Finder 
+          </h2>
+          <p className="max-w-[600px] text-gray-900 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed ">
+            Let us help you to know the weather of any place...
+          </p>
         </div>
-      </header>
-
-      <header className="flex items-center justify-center w-full p-4">
-        <div className="grid max-w-2xl grid-cols-2 items-center gap-4">
-          <h1 className="text-2xl font-semibold">New York</h1>
-          <p className="text-sm text-gray-500 justify-self-end">February 22, 2024</p>
-        </div>
-      </header>
-      <main className="flex-1">
-        <section className="w-full p-4 flex flex-col items-center justify-center gap-4">
+        <div className="p-4 flex flex-col items-center justify-center m-10  gap-4 bg-sky-300 rounded-lg ring-1 ring-orange-300 shadow-xl">
+          <div className="items-center">
+            <form onSubmit={handleSubmit} className="flex gap-4">
+              <input
+                className="ring-1 rounded-lg px-4 font-medium focus:outline-none"
+                placeholder="Search for a city..."
+                value={searchCity}
+                onChange={handleInputChange}
+              />
+              <button
+                type="submit"
+                className="hover:scale-150 active:text-pink-600 transition-all active:duration-300"
+                size="icon"
+              >
+                {/* <FaSearch className="w-4 h-4" /> */}
+              </button>
+            </form>
+          </div>
+          <div className="flex gap-4">
+            <div className="flex flex-col justify-between">
+              <h1 className="text-2xl font-semibold">{weather.city}</h1>
+              <span className="font-medium">
+                Last Updated:
+                <p className=" text-gray-900 justify-self-end">
+                  {weather.date}
+                </p>
+              </span>
+            </div>
+            <div className="flex flex-col items-center">
+              <img
+                src={weather.icon}
+                alt="icon"
+                className="w-12 h-12 scale-150"
+              />
+              <p className="font-semibold">{weather.cloud}</p>
+              <p className="text-4xl font-semibold">
+                {(weather.temperature - 273.15).toFixed(2)}°C
+              </p>
+            </div>
+          </div>
           <div className="flex items-center gap-4">
             <div className="flex flex-col items-center gap-1">
-              <CloudSunIcon className="w-12 h-12" />
-              <p className="text-2xl font-semibold">Cloudy</p>
+              <WiHumidity className="w-12 h-12 scale-150" />
+              <p className="text-2xl font-semibold">
+                Humidity: {weather.humidity.toFixed(2)}%
+              </p>
             </div>
             <div className="flex flex-col items-center gap-1">
-              <ThermometerIcon className="w-12 h-12" />
-              <p className="text-2xl font-semibold">25°C</p>
-            </div>
-            <div className="flex flex-col items-center gap-1">
-              <DropletIcon className="w-12 h-12" />
-              <p className="text-2xl font-semibold">Humidity: 50%</p>
-            </div>
-            <div className="flex flex-col items-center gap-1">
-              <WindIcon className="w-12 h-12" />
-              <p className="text-2xl font-semibold">Wind: 10 m/s</p>
+              <FaWind className="w-12 h-12" />
+              <p className="text-2xl font-semibold">
+                Wind: {weather.windspeed} m/s
+              </p>
             </div>
           </div>
           <div className="grid max-w-sm grid-cols-2 items-center gap-4 text-center">
             <div className="flex flex-col items-center gap-1">
-              <p className="text-sm font-medium">Sunrise</p>
-              <p className="text-sm font-medium">6:30 AM</p>
+              <p className="text-lg font-medium">Sunrise</p>
+              <BsSunrise className="w-12 h-12" />
+              <p className="text-md font-medium">{weather.sunrise}</p>
             </div>
-            <div className="flex flex-col items-center gap-1">
-              <p className="text-sm font-medium">Sunset</p>
-              <p className="text-sm font-medium">5:45 PM</p>
+            <div className="flex flex-col items-center gap-1 ">
+              <p className="text-lg font-medium">Sunset</p>
+              <BsSunset className="w-12 h-12" />
+              <p className="text-md font-medium">{weather.sunset}</p>
             </div>
           </div>
-        </section>
-        <section className="w-full p-4 flex flex-col items-center justify-center gap-4">
+        </div>
+        {/* <section className="w-full p-4 flex flex-col items-center justify-center gap-4">
           <h2 className="text-2xl font-semibold">5 Day Forecast</h2>
           <div className="grid max-w-sm grid-cols-3 items-start gap-4">
             <div className="flex flex-col items-center gap-1">
@@ -106,150 +186,21 @@ const Weather = () => {
               <p className="text-sm font-medium">25/20°C</p>
             </div>
           </div>
-        </section>
-      </main>
-    </div>
+        </section> */}
+        <div>
+          <h1>
+            For any suggestion or improvements, please{" "}
+            <Link
+              to={"/contact"}
+              className="text-blue-500 hover:text-green-600"
+            >
+              contact us
+            </Link>{" "}
+          </h1>
+        </div>
+      </div>
     </>
-  )
-}
+  );
+};
 
 export default Weather;
-
-
-function CloudSunIcon(props) {
-    return (
-      <svg
-        {...props}
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M12 2v2" />
-        <path d="m4.93 4.93 1.41 1.41" />
-        <path d="M20 12h2" />
-        <path d="m19.07 4.93-1.41 1.41" />
-        <path d="M15.947 12.65a4 4 0 0 0-5.925-4.128" />
-        <path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z" />
-      </svg>
-    )
-  }
-  
-  
-  function DropletIcon(props) {
-    return (
-      <svg
-        {...props}
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z" />
-      </svg>
-    )
-  }
-  
-  
-  function ThermometerIcon(props) {
-    return (
-      <svg
-        {...props}
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z" />
-      </svg>
-    )
-  }
-  
-  
-  function WindIcon(props) {
-    return (
-      <svg
-        {...props}
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2" />
-        <path d="M9.6 4.6A2 2 0 1 1 11 8H2" />
-        <path d="M12.6 19.4A2 2 0 1 0 14 16H2" />
-      </svg>
-    )
-  }
-  
-  
-  
-  
-  function SearchIcon(props) {
-    return (
-      <svg
-        {...props}
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <circle cx="11" cy="11" r="8" />
-        <path d="m21 21-4.3-4.3" />
-      </svg>
-    )
-  }
-  
-  
-  function SunIcon(props) {
-    return (
-      <svg
-        {...props}
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <circle cx="12" cy="12" r="4" />
-        <path d="M12 2v2" />
-        <path d="M12 20v2" />
-        <path d="m4.93 4.93 1.41 1.41" />
-        <path d="m17.66 17.66 1.41 1.41" />
-        <path d="M2 12h2" />
-        <path d="M20 12h2" />
-        <path d="m6.34 17.66-1.41 1.41" />
-        <path d="m19.07 4.93-1.41 1.41" />
-      </svg>
-    )
-  }
-  
