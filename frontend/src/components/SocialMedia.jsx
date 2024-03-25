@@ -32,7 +32,7 @@ const SocialMedia = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <div className="flex items-center justify-center space-x-4  ">
+                        <div className="flex items-center justify-center space-x-4 hover:scale-125  ">
                           {item.icon}
                           {index !== socialMediaLinks.length - 1 && (
                             <div className="h-8 border-l border-gray-200" />
