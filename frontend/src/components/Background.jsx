@@ -32,7 +32,7 @@ const styles = {
   },
   backgroundMainAfter: {
     content: '""',
-    backgroundImage: "url(https://assets.dub.co/misc/grid.svg)",
+    backgroundImage: "/assets/image1.jpg",
     zIndex: 1,
     position: "absolute",
     width: "100%",
