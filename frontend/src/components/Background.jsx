@@ -32,7 +32,7 @@ const styles = {
   },
   backgroundMainAfter: {
     content: '""',
-    backgroundImage: "/assets/image1.jpg",
+    backgroundImage: "/assets/grid.svg",
     zIndex: 1,
     position: "absolute",
     width: "100%",
