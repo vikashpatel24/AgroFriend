@@ -6,6 +6,7 @@ const Disease = () => {
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -46,8 +47,9 @@ const Disease = () => {
     formData.append('file', selectedFile);
 
     try {
+      setLoading(true);
       const response = await axios.post(
-        'https://disease-detect.onrender.com/disease-detect',
+        'http://127.0.0.1:5000/disease-detect',
         formData,
         {
           headers: {
@@ -57,10 +59,11 @@ const Disease = () => {
       );
 
       const recommendation = response.data;
-      console.log(recommendation);
       navigate("/disease-result", { state: { recommendation } });
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -119,9 +122,12 @@ const Disease = () => {
                 </div>
                 <button
                   type="submit"
-                  className=" bg-green-500 text-gray-900 text-lg ring-1 ring-gray-900 shadow-xl px-4 rounded-lg hover:text-white py-2"
+                  disabled={loading}
+                  className={`bg-green-500 text-gray-900 text-lg ring-1 ring-gray-900 shadow-xl px-4 rounded-lg hover:text-white py-2 ${
+                    loading ? "cursor-not-allowed" : ""
+                  }`}
                 >
-                  Detect
+                  {loading ? "Detecting..." : "Detect"}
                 </button>
               </form>
             </div>
