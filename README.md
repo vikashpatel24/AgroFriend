@@ -201,7 +201,7 @@ Built with 💚 by Vikash Patel and the AgroFriend team.
 
 **Technologies**: React.js, Node.js, Express.js, Tailwind CSS, Resend, and Vercel Hosting.
 
-&copy; 2025 AgroFriend. All rights reserved.
+&copy; 2024 AgroFriend. All rights reserved.
 
 > "Cultivate Success with AgroFriend's Insight."
 
