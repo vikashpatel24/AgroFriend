@@ -1,6 +1,4 @@
-# AgroFriend - Revolutionizing Farming with Technology
-
-![AgroFriend Logo](https://agrofriend.vercel.app/assets/ag_wt-bg.png)
+<div style="color:Tomato;"><h1><span></span><img src="https://agrofriend.vercel.app/assets/ag_wt-bg.png" width="55px"height="55px" align="absmiddle"/><span>       </span>AgroFriend - Revolutionizing Farming with Technology</h1></div>
 
 AgroFriend is a comprehensive, data-driven platform designed to help farmers optimize their farming practices. By offering personalized crop, fertilizer, and disease recommendations, AgroFriend leverages cutting-edge technology and innovation to improve sustainability and maximize agricultural yields.
 
@@ -220,7 +218,7 @@ Built with 💚 by Vikash Patel and the AgroFriend team.
 
 **Technologies**: React.js, Node.js, Express.js, Tailwind CSS, Resend, and Vercel Hosting.
 
-![Footer Logo](https://agrofriend.vercel.app/assets/ag_wt-bg.png)
+<h1><img src="https://agrofriend.vercel.app/assets/ag_wt-bg.png" width="55px"height="55px" align="absmiddle"/></h1>
 
 &copy; 2024 AgroFriend. All rights reserved.
 
