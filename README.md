@@ -1,4 +1,8 @@
-<div style="color:Tomato;"><h2><span></span><img src="https://agrofriend.vercel.app/assets/ag_wt-bg.png" width="55px"height="55px" align="absmiddle"/><span>       </span>AgroFriend - Revolutionizing Farming with Technology</h1></div>
+<h2 style="color:Tomato; font-size:30px;">
+  <img src="https://agrofriend.vercel.app/assets/ag_wt-bg.png" width="55" height="55" align="absmiddle" />
+  AgroFriend - Revolutionizing Farming with Technology
+</h2>
+
 
 AgroFriend is a comprehensive, data-driven platform designed to help farmers optimize their farming practices. By offering personalized crop, fertilizer, and disease recommendations, AgroFriend leverages cutting-edge technology and innovation to improve sustainability and maximize agricultural yields.
 
